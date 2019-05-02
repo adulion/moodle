@@ -38,8 +38,8 @@ if($userdetails) {
     {user_enrolments} ue JOIN {enrol} e ON ( ue.enrolid = e.id) JOIN {course} c ON e.courseid = c.id AND userid = :id LEFT JOIN
     {course_completions} cc ON cc.userid = ue.userid AND cc.course = e.courseid ORDER BY c.fullname ASC', ['id' => $userid]);
 
-    echo $OUTPUT->heading(get_string('lb_details_header', 'local_coursecompletionstatus') . ': ' . $userdetails->firstname . ' - ' .
-            $userdetails->lastname);
+    echo $OUTPUT->heading(get_string('lb_details_header', 'local_coursecompletionstatus') . ': ' . ucfirst($userdetails->firstname) . ' ' .
+            ucfirst($userdetails->lastname));
 
     $table = new html_table();
 
