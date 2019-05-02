@@ -62,6 +62,8 @@ if($userdetails) {
 }
 else {
 
+    echo html_writer::tag('p', get_string('lb_no_user', 'local_coursecompletionstatus'), array('align' => 'center'));
+
 }
 
 echo $OUTPUT->footer();

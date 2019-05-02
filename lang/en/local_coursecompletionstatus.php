@@ -33,3 +33,4 @@ $string['lb_course_name'] = 'Course name';
 $string['lb_details_header'] = 'Course Completion Details For';
 $string['lb_completion_status'] = 'Completion Status';
 $string['lb_completed_on'] = 'Completed On';
+$string['lb_no_user'] = 'No user found';
