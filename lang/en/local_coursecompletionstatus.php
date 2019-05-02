@@ -24,10 +24,12 @@
 
 // Main report.
 $string['lb_module_title'] = 'Course Completion Report';
+$string['lb_main_header'] = 'Course Completion Details';
 $string['lb_first_name'] = 'First Name';
 $string['lb_last_name'] = 'Last Name';
 
 // Details.
 $string['lb_course_name'] = 'Course name';
+$string['lb_details_header'] = 'Course Completion Details For';
 $string['lb_completion_status'] = 'Completion Status';
 $string['lb_completed_on'] = 'Completed On';

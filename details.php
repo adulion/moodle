@@ -28,29 +28,41 @@ $userid = optional_param('user_id', 0, PARAM_INT);
 
 admin_externalpage_setup('coursecompletionstats', '', null, '', array('pagelayout' => 'report'));
 
-$usercourses = $DB->get_records_sql('SELECT ue.id, ue.userid, e.courseid, c.fullname, cc.id completion_id, cc.timecompleted FROM
-{user_enrolments} ue JOIN {enrol} e ON ( ue.enrolid = e.id) JOIN {course} c ON e.courseid = c.idAND userid = :id LEFT JOIN
-{course_completions} cc ON cc.userid = ue.userid AND cc.course = e.courseid ORDER BY c.fullname ASC', ['id' => $userid]);
-
 echo $OUTPUT->header();
 
-$table = new html_table();
+$userdetails = core_user::get_user($userid);
 
-$table->head = array(get_string('lb_course_name', 'local_coursecompletionstatus'),
-        get_string('lb_completion_status', 'local_coursecompletionstatus'),
-        get_string('lb_completed_on', 'local_coursecompletionstatus'));
+if($userdetails) {
 
-foreach ($usercourses as $course) {
-    $row = array();
+    $usercourses = $DB->get_records_sql('SELECT ue.id, ue.userid, e.courseid, c.fullname, cc.id completion_id, cc.timecompleted FROM
+    {user_enrolments} ue JOIN {enrol} e ON ( ue.enrolid = e.id) JOIN {course} c ON e.courseid = c.id AND userid = :id LEFT JOIN
+    {course_completions} cc ON cc.userid = ue.userid AND cc.course = e.courseid ORDER BY c.fullname ASC', ['id' => $userid]);
 
-    $row[] = html_writer::link(new moodle_url('/course/view.php', array('id' => $course->courseid)), $course->fullname);
-    $row[] = is_null($course->completion_id) ? 'Incomplete' : 'Completed';
-    $row[] = is_null($course->timecompleted) ? 'Incomplete' :
-            userdate($course->timecompleted, get_string('strftimedatetime', 'langconfig'));
+    echo $OUTPUT->heading(get_string('lb_details_header', 'local_coursecompletionstatus') . ': ' . $userdetails->firstname . ' - ' .
+            $userdetails->lastname);
 
-    $table->data[] = $row;
+    $table = new html_table();
+
+    $table->head = array(get_string('lb_course_name', 'local_coursecompletionstatus'),
+            get_string('lb_completion_status', 'local_coursecompletionstatus'),
+            get_string('lb_completed_on', 'local_coursecompletionstatus'));
+
+    foreach ($usercourses as $course) {
+        $row = array();
+
+        $row[] = html_writer::link(new moodle_url('/course/view.php', array('id' => $course->courseid)), $course->fullname);
+        $row[] = is_null($course->completion_id) ? 'Incomplete' : 'Completed';
+        $row[] = is_null($course->timecompleted) ? 'Incomplete' :
+                userdate($course->timecompleted, get_string('strftimedatetime', 'langconfig'));
+
+        $table->data[] = $row;
+    }
+    echo html_writer::table($table);
+
 }
-echo html_writer::table($table);
+else {
+
+}
 
 echo $OUTPUT->footer();
 

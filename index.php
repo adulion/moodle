@@ -28,9 +28,11 @@ admin_externalpage_setup('coursecompletionstats', '', null, '', array('pagelayou
 
 echo $OUTPUT->header();
 
+echo $OUTPUT->heading(get_string('lb_main_header', 'local_coursecompletionstatus'));
+
 $table = new html_table();
 
-$table->head = array(get_string('lb_first_name', 'lcoursecompletionstats'),
+$table->head = array(get_string('lb_first_name', 'local_coursecompletionstatus'),
         get_string('lb_last_name', 'local_coursecompletionstatus'),
         '',
 );
