@@ -32,13 +32,14 @@ echo $OUTPUT->header();
 
 $userdetails = core_user::get_user($userid);
 
-if($userdetails) {
+if ($userdetails) {
 
     $usercourses = $DB->get_records_sql('SELECT ue.id, ue.userid, e.courseid, c.fullname, cc.id completion_id, cc.timecompleted FROM
     {user_enrolments} ue JOIN {enrol} e ON ( ue.enrolid = e.id) JOIN {course} c ON e.courseid = c.id AND userid = :id LEFT JOIN
     {course_completions} cc ON cc.userid = ue.userid AND cc.course = e.courseid ORDER BY c.fullname ASC', ['id' => $userid]);
 
-    echo $OUTPUT->heading(get_string('lb_details_header', 'local_coursecompletionstatus') . ': ' . ucfirst($userdetails->firstname) . ' ' .
+    echo $OUTPUT->heading(get_string('lb_details_header', 'local_coursecompletionstatus') . ': ' .
+            ucfirst($userdetails->firstname) . ' ' .
             ucfirst($userdetails->lastname));
 
     $table = new html_table();
@@ -59,8 +60,7 @@ if($userdetails) {
     }
     echo html_writer::table($table);
 
-}
-else {
+} else {
 
     echo html_writer::tag('p', get_string('lb_no_user', 'local_coursecompletionstatus'), array('align' => 'center'));
 
