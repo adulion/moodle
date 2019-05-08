@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-// Just a link to course compelte report.
+// Just a link to course complete report.
 $ADMIN->add('reports',
         new admin_externalpage('coursecompletionstats', get_string('lb_module_title', 'local_coursecompletionstatus'),
                 $CFG->wwwroot . "/local/coursecompletionstatus/index.php")
